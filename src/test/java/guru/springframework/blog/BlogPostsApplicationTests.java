@@ -14,7 +14,6 @@ import java.util.UUID;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = BlogPostsApplication.class)
-
 public class BlogPostsApplicationTests {
 
 	@Autowired
@@ -32,7 +31,7 @@ public class BlogPostsApplicationTests {
 
 	private void delete(User user) {
 		repo.delete(user);
-		user=repo.findOne(user.getId());
+		user=repo.findById(user.getId()).orElse(null);
 		assertNull(user);
 	}
 
@@ -45,7 +44,7 @@ public class BlogPostsApplicationTests {
 	private User update(User user) {
 		user.setAge(20);
 		repo.save(user);
-		user=repo.findOne(user.getId());
+		user=repo.findById(user.getId()).orElse(null);
 		assertEquals("Age updated should be 20",user.getAge(),20);
 		return user;
 	}
